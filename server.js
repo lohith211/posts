@@ -1,10 +1,16 @@
 //Install express server
 const express = require('express');
 const path = require('path');
-const cors = require('cors');
+
 
 const app = express();
-app.use(cors());
+app.use('/api', proxy('https://jsonplaceholder.typicode.com/posts', {
+  // preserveHostHdr: true,
+  https: isHttps,
+  proxyReqPathResolver: function (req) {
+    return require('url').parse(req.url).path;
+  }
+}));
 
 // // Serve only the static files form the dist directory
 app.use(express.static(__dirname + '/dist/posts'));
@@ -16,7 +22,10 @@ app.use(express.static(__dirname + '/dist/posts'));
 //   next();
 // });
 
-app.get('*', function (req, res) {
+
+
+
+app.get('/', function (req, res) {
 
   res.sendFile(path.join(__dirname + '/dist/posts/index.html'));
 });

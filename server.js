@@ -4,13 +4,7 @@ const path = require('path');
 
 
 const app = express();
-app.use('/api', proxy('https://jsonplaceholder.typicode.com/posts', {
-  // preserveHostHdr: true,
-  https: isHttps,
-  proxyReqPathResolver: function (req) {
-    return require('url').parse(req.url).path;
-  }
-}));
+
 
 // // Serve only the static files form the dist directory
 app.use(express.static(__dirname + '/dist/posts'));

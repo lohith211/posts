@@ -114,6 +114,6 @@ export class UserComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('currentUser');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 }

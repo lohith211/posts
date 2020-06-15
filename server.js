@@ -6,21 +6,11 @@ const app = express();
 
 // Serve only the static files form the dist directory
 app.use(express.static(__dirname + '/dist/posts'));
-app.use(function (req, res, next) {
-
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
-  );
-  // res.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-
-  // Pass to next layer of middleware
+app.all('*', function (req, res, next) {
+  var origin = req.get('origin');
+  res.header('Access-Control-Allow-Origin', origin);
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
 
